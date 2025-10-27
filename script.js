@@ -351,6 +351,7 @@ class GestureCanvas {
     clearCanvas() {
         this.elements = [];
         this.currentElement = null;
+        this.isDrawing = false;
         this.history = [];
         this.historyIndex = -1;
         this.panOffset = { x: 0, y: 0 };
