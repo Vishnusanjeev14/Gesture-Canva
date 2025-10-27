@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gesture Canvas - Lite</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="app-container">
+        <div id="appLogo" class="app-logo">Gesture Canvas</div>
+        <canvas id="drawingCanvas" class="drawing-canvas"></canvas>
+        
+        <div id="gesturePanel" class="gesture-panel">
+            <div class="panel-header">
+                <h3>Gesture Control</h3>
+            </div>
+            
+            <div class="current-tool">
+                <span class="tool-label">Current Tool:</span>
+                <span id="currentTool" class="tool-name">Idle</span>
+                <span id="toolIcon" class="tool-icon">🤷</span>
+            </div>
+            
+            <div class="gesture-list">
+                <h4>Available Gestures:</h4>
+                <div class="gesture-item">
+                    <span class="gesture-icon">☝️</span>
+                    <span class="gesture-desc">Index Finger: Move Cursor</span>
+                </div>
+                <div class="gesture-item">
+                    <span class="gesture-icon">🤏</span>
+                    <span class="gesture-desc">Pinch: Draw on Canvas</span>
+                </div>
+                 <div class="gesture-item">
+                    <span class="gesture-icon">✊</span>
+                    <span class="gesture-desc">Fist: Pan / Move Canvas</span>
+                </div>
+                <div class="gesture-item">
+                    <span class="gesture-icon">✋</span>
+                    <span class="gesture-desc">Open Hand: Erase</span>
+                </div>
+                 <div class="gesture-item">
+                    <span class="gesture-icon">🙌</span>
+                    <span class="gesture-desc">Two Hands: Zoom In/Out</span>
+                </div>
+               
+            </div>
+        </div>
+        
+        <div id="videoContainer" class="video-container">
+            <video id="inputVideo" class="input-video" playsinline></video>
+            <canvas id="outputCanvas" class="output-canvas"></canvas>
+            <button id="toggleCamera" class.="toggle-btn">📹</button>
+        </div>
+        
+        <div class="control-buttons">
+            <button id="saveBtn" class="control-btn">💾 Save</button>
+            <button id="resetBtn" class="control-btn">🗑️ Reset</button>
+            <button id="smoothenBtn" class="control-btn">✨ Smoothen</button> 
+            <button id="hideCamera" class="control-btn">📷 Hide/Show</button>
+
+            <label for="colorPicker" class="control-btn color-label">Color</label>
+            <input type="color" id="colorPicker" class="color-picker-input" value="#1a1a1a">
+
+            <label for="sizeSlider" class="control-btn size-label">Size: <span id="sizeValue">4</span></label>
+            <input type="range" id="sizeSlider" class="size-slider" min="1" max="50" value="4">
+            </div>
+        
+        <div id="statusIndicator" class="status-indicator">
+            <div class="status-content">
+                <div class="loading-spinner"></div>
+                <span id="statusText">Initializing camera...</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="gestures.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

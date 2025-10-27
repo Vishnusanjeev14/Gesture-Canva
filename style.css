@@ -1,0 +1,336 @@
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background: #ffffff;
+    color: #1a1a1a;
+    overflow: hidden;
+    height: 100vh;
+    user-select: none;
+}
+
+/* Main app container */
+.app-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* --- ADDED: App Logo/Title --- */
+.app-logo {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    font-size: 24px;
+    font-weight: 700;
+    color: #007AFF; /* Apple Blue */
+    background: rgba(255, 255, 255, 0.95);
+    padding: 10px 18px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    backdrop-filter: blur(10px);
+    z-index: 100;
+}
+/* --- END OF ADDITION --- */
+
+
+/* Drawing Canvas */
+.drawing-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #ffffff;
+    cursor: none; /* Hide default cursor */
+    z-index: 1;
+}
+
+.drawing-canvas.panning {
+    cursor: grabbing;
+}
+
+/* Gesture Panel - Top Right */
+.gesture-panel {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 280px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 2px solid #e5e5e5;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    backdrop-filter: blur(10px);
+    transition: border-color 0.3s ease; /* --- ADDED --- */
+}
+
+/* --- ADDED Gesture Panel Border Colors --- */
+.gesture-panel.pointer-mode { border-color: #8E8E93; }
+.gesture-panel.draw-mode { border-color: #007AFF; }
+.gesture-panel.erase-mode { border-color: #FF3B30; }
+.gesture-panel.pan-mode { border-color: #FF9500; }
+.gesture-panel.zoom-mode { border-color: #34C759; }
+.gesture-panel.clear-mode { border-color: #FF3B30; }
+.gesture-panel.idle-mode { border-color: #e5e5e5; }
+/* --- END OF ADDITION --- */
+
+
+.panel-header h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #2d2d2d;
+}
+
+.current-tool {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    border-left: 4px solid #8E8E93; /* Default to gray */
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Tool-based background/border colors for gesture panel */
+.current-tool.pointer-mode { border-left-color: #8E8E93; /* Gray */ }
+.current-tool.pointer-mode .tool-name { color: #8E8E93; }
+
+.current-tool.draw-mode { border-left-color: #007AFF; /* Blue */ }
+.current-tool.draw-mode .tool-name { color: #007AFF; }
+
+.current-tool.erase-mode { border-left-color: #FF3B30; /* Red */ }
+.current-tool.erase-mode .tool-name { color: #FF3B30; }
+
+.current-tool.pan-mode { border-left-color: #FF9500; /* Orange */ }
+.current-tool.pan-mode .tool-name { color: #FF9500; }
+
+.tool-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #666;
+}
+
+.tool-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: #8E8E93; /* Default to gray */
+    flex: 1;
+    transition: color 0.3s ease;
+}
+
+.tool-icon {
+    font-size: 20px;
+}
+
+.gesture-list h4 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #4a4a4a;
+}
+
+.gesture-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.gesture-item:last-child {
+    border-bottom: none;
+}
+
+.gesture-icon {
+    font-size: 18px;
+    width: 24px;
+    text-align: center;
+}
+
+.gesture-desc {
+    font-size: 13px;
+    color: #666;
+    flex: 1;
+}
+
+/* Video Container - Bottom Right */
+.video-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 240px;
+    height: 180px;
+    background: #000;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    z-index: 100;
+    border: 4px solid transparent; /* Base for colored border */
+    transition: all 0.3s ease, border-color 0.3s ease;
+}
+
+/* Tool-based border colors for video container */
+.video-container.pointer-mode { border-color: #8E8E93; /* Gray */ }
+.video-container.draw-mode { border-color: #007AFF; /* Blue */ }
+.video-container.erase-mode { border-color: #FF3B30; /* Red */ }
+.video-container.pan-mode { border-color: #FF9500; /* Orange */ }
+/* --- ADDED missing video border colors --- */
+.video-container.zoom-mode { border-color: #34C759; /* Green */ }
+.video-container.clear-mode { border-color: #FF3B30; /* Red */ }
+.video-container.idle-mode { border-color: transparent; }
+/* --- END OF ADDITION --- */
+
+.video-container.hidden {
+    transform: scale(0.3);
+    opacity: 0.7;
+    width: 60px;
+    height: 45px;
+}
+
+.input-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scaleX(-1);
+}
+
+.output-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
+.toggle-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    font-size: 16px;
+    cursor: pointer;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.toggle-btn:hover {
+    background: white;
+    transform: scale(1.1);
+}
+
+/* Control Buttons - Bottom Left */
+.control-buttons {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    display: flex;
+    gap: 12px;
+    z-index: 100;
+    align-items: center; /* --- ADDED THIS LINE --- */
+}
+
+.control-btn {
+    padding: 12px 16px;
+    border: 2px solid #e5e5e5;
+    background: rgba(255, 255, 255, 0.95);
+    color: #2d2d2d;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(10px);
+}
+
+.control-btn:hover {
+    background: #f8f9fa;
+    border-color: #007AFF;
+}
+
+/* Status Indicator */
+.status-indicator {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.95);
+    padding: 24px 32px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    z-index: 200;
+    display: none;
+    backdrop-filter: blur(10px);
+}
+
+.status-indicator.show {
+    display: block;
+}
+
+/* --- ADDED NEW STYLES (WITH FIX) --- */
+
+/* Style for the color picker */
+.color-label {
+    padding-right: 8px; /* Give some space */
+}
+
+.color-picker-input {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    border: 2px solid #e5e5e5; /* --- THIS IS THE FIX (was #e5e5eS) --- */
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: transparent; /* Hide default bg */
+    transition: border-color 0.2s ease;
+}
+/* Style for the color picker "swatch" */
+.color-picker-input::-webkit-color-swatch-wrapper {
+    padding: 2px;
+    border-radius: 6px;
+}
+.color-picker-input::-webkit-color-swatch {
+    border: none;
+    border-radius: 4px;
+}
+.color-picker-input::-moz-color-swatch {
+    border: none;
+    border-radius: 4px;
+}
+
+/* Style for the size slider */
+.size-label {
+    min-width: 90px;
+    text-align: center;
+}
+
+.size-slider {
+    cursor: pointer;
+    margin-left: 4px; /* A little space from its label */
+    align-self: center;
+}
+/* --- END OF ADDITION --- */
