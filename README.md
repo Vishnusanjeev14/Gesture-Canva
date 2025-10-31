@@ -1,42 +1,48 @@
 # 🎨 Gesture Canva
 
-Gesture Canva is a "no-touch" digital whiteboard application that uses your webcam to translate hand gestures into drawing commands. Built with JavaScript and Mediapipe, it allows you to draw, erase, pan, and more, all through intuitive hand movements.
+Gesture Canva is a "no-touch" digital whiteboard application that uses your webcam to translate hand gestures into drawing commands. Built with JavaScript and Mediapipe, it allows you to draw, erase, pan, and zoom, all through intuitive hand movements.
 
 ## ✨ Features
 
-* **Gesture-Based Tools:** Switch between tools just by changing your hand shape.
-* **Smooth Drawing:** Creates clean, vector-based lines.
-* **Pan & Zoom:** Move around your infinite canvas with ease.
-* **Undo/Redo:** Full history support (also available via `Ctrl+Z` / `Ctrl+Y`).
-* **Smart Cursor:** A color-coded, fading trail shows you exactly what your hand is doing.
+Based on the code, this application supports:
+
+* **Gesture-Based Tools:** Draw, erase, pan, and zoom just by changing your hand shape.
+* **Live Tool Feedback:** The UI (video and gesture panels) changes color to match your active tool (e..g., blue for draw, red for erase).
+* **Pan & Zoom:** Move around and scale your infinite canvas.
+* **Color & Size Controls:** Use the UI buttons to change your brush color and size.
+* **Handwriting Smoothing:** A "Smoothen" button to clean up your freehand lines using a spline algorithm.
+* **Undo/Redo:** Full history support, also available via `Ctrl+Z` / `Ctrl+Y`.
+* **Save:** Save your creation as a PNG file.
 
 ## 🚀 How to Run
 
-1.  **Install Dependencies:**
-    * You must have **Python 3** installed.
-    * Install the required Python library (Mediapipe):
-        ```bash
-        pip install mediapipe
-        ```
+This is a fully client-side application. It **does not require** any Python libraries like `mediapipe` to be installed. The Mediapipe library is loaded from a CDN (a web link).
 
-2.  **Start the Server:**
-    * From the project's main folder, run the simple Python web server:
-        ```bash
-        python server.py
-        ```
+It only needs to be run from a simple local web server so the browser can load all the files (`.js`, `.css`) correctly.
+
+1.  **Open a terminal** in the project's main folder (where `index.html` is located).
+
+2.  **Start a simple web server.** If you have Python 3, run:
+    ```bash
+    python3 -m http.server 8000
+    ```
+    (If `python3` doesn't work, try `python -m http.server 8000`)
 
 3.  **Open the App:**
-    * Open your web browser (Chrome is recommended) and go to:
-        [http://localhost:8000](http://localhost:8000)
-    * Allow the browser to access your webcam.
+    Open your web browser (Chrome is recommended) and go to:
+    [http://localhost:8000](http://localhost:8000)
+
+4.  **Allow** the browser to access your webcam when prompted.
 
 ## 🖐️ Gesture Controls
 
+This is the list of gestures implemented in `gestures.js`:
+
 | Gesture | Icon | Action | Description |
 | :--- | :--- | :--- | :--- |
-| **One Finger** | ☝️ | **Pointer/Cursor** | Moves a cursor on the screen but does not draw. |
-| **Pinch** | 🤏 | **Draw** | Draws smooth freehand lines on the canvas. |
-| **Two Fingers** | ✌️ | **Circle** | Draws a circle from the center out. |
-| **Open Palm** | ✋ | **Erase** | Erases any lines or shapes it touches. |
-| **Fist** | ✊ | **Pan/Move** | "Grabs" the canvas to move it around. |
-| **Both Hands** | 🤚🤚 | **Clear All** | Clears the entire canvas. |
+| **Pointer** | ☝️ | **Cursor** | Index finger only. Moves the cursor on the screen but does not draw. |
+| **Draw** | 🤏 | **Draw** | Pinch thumb and index finger. Draws freehand lines on the canvas. |
+| **Pan/Move** | ✊ | **Pan** | A closed fist. "Grabs" the canvas to move it around. |
+| **Erase** | ✋ | **Erase** | An open hand (4+ fingers). Erases any lines it touches. |
+| **Clear All** | 🤚 | **Clear** | A full open hand (all 5 fingers extended). Clears the entire canvas. |
+| **Zoom** | 🙌 | **Zoom** | Two hands detected. Move hands apart or together to zoom in and out. |
